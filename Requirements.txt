@@ -1,0 +1,42 @@
+# ==============================
+# AI Meeting Assistant - Requirements
+# ==============================
+
+# --- UI ---
+streamlit==1.38.0
+
+# --- YouTube / Audio Extraction ---
+yt-dlp==2024.8.6
+pydub==0.25.1
+ffmpeg-python==0.2.0
+
+# --- Transcription (local Whisper) ---
+# openai-whisper==20231117
+torch==2.4.0
+torchaudio==2.4.0
+
+# --- Translation (Hindi -> English, if not handled by Whisper) ---
+deep-translator==1.11.4
+
+# --- LangChain + LCEL + Mistral API ---
+langchain==0.2.16
+langchain-core==0.2.38
+langchain-community==0.2.16
+langchain-mistralai==0.1.13
+mistralai==0.4.2
+
+# --- RAG Pipeline ---
+chromadb==0.5.5
+langchain-huggingface==0.0.3
+sentence-transformers==3.0.1
+huggingface-hub==0.24.6
+
+# --- PDF / TXT Export ---
+fpdf2==2.7.9
+python-docx==1.1.2
+
+# --- Utilities ---
+python-dotenv==1.0.1
+tiktoken==0.7.0
+numpy==1.26.4
+pandas==2.2.2
