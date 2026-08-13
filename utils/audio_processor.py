@@ -42,10 +42,9 @@ def download_youtube_audio(url: str) -> str:
 
 if __name__ == "__main__":
 
-    youtube_url = "https://youtu.be/VoKFyB1q4fc?si=furlIGasC-Ypw3OC"
+    youtube_url = "https://youtu.be/xKOyDDuQSVY?si=pAXzggqsc-IGMzQQ"
     audio_file = download_youtube_audio(youtube_url)
    
-
 
 def convert_to_wav(input_path: str) -> str:
     """Convert any audio/video file to WAV format using pydub."""
@@ -56,4 +55,22 @@ def convert_to_wav(input_path: str) -> str:
 
     return output_path
 
-print(convert_to_wav(audio_file))
+data_final = convert_to_wav(audio_file)
+
+
+
+def chunk_audio(wav_path: str, chunk_minutes: int = 10) -> list:
+    audio = AudioSegment.from_wav(wav_path)  #extracting the audio from wavepath
+    chunk_ms = chunk_minutes * 60 *1000 
+    chunks = []
+
+    for i, start in enumerate(range(0, len(audio), chunk_ms)):
+        chunk = audio[start: start + chunk_ms]  #create chunks
+        chunk_path = f"{wav_path}_chunk_{i}.wav" #defining chunk name
+        chunk.export(chunk_path, format="wav") #exporting chunk file
+
+        chunks.append(chunk_path) # appending chunk into chunks list
+    return chunks
+
+print(chunk_audio(data_final))
+
