@@ -40,12 +40,8 @@ def download_youtube_audio(url: str) -> str:
         filename = filename.replace(".m4a", ".wav")
     return filename
 
-if __name__ == "__main__":
-
-    youtube_url = "https://youtu.be/xKOyDDuQSVY?si=pAXzggqsc-IGMzQQ"
-    audio_file = download_youtube_audio(youtube_url)
-   
-
+ 
+#converting the audio into proper format
 def convert_to_wav(input_path: str) -> str:
     """Convert any audio/video file to WAV format using pydub."""
     output_path = os.path.splitext(input_path)[0] + "_converted.wav"
@@ -55,10 +51,8 @@ def convert_to_wav(input_path: str) -> str:
 
     return output_path
 
-data_final = convert_to_wav(audio_file)
 
-
-
+#splitting the large audio into smaller chunks and saving in a list
 def chunk_audio(wav_path: str, chunk_minutes: int = 10) -> list:
     audio = AudioSegment.from_wav(wav_path)  #extracting the audio from wavepath
     chunk_ms = chunk_minutes * 60 *1000 
@@ -72,5 +66,19 @@ def chunk_audio(wav_path: str, chunk_minutes: int = 10) -> list:
         chunks.append(chunk_path) # appending chunk into chunks list
     return chunks
 
-print(chunk_audio(data_final))
+#automating the audio processing on the user input
+def process_input(source: str) -> list:
+    if source.startswith("http://") or source.startswith("https://"):
+        print("Detected YouTube URL. Downloading audio...")
+        wave_path = download_youtube_audio(source)
+    else:
+        print("Detected Local file. Converting into wav...")
+        wave_path = convert_to_wav(source)
+
+    print("Chunking Audio")
+    chunks = chunk_audio(wave_path) 
+    print(f"Audio Ready - {len(chunks)} chunk(s) created")  
+    return chunks
+
+
 
