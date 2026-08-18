@@ -6,6 +6,9 @@ venv/
 .env
 .env.*
 
+# Secrets
+cookies.txt
+
 # Python cache
 __pycache__/
 *.py[cod]
@@ -20,6 +23,9 @@ __pycache__/
 *.log
 
 # Generated media
+downloads/
+
+# Generated media files
 *.mp3
 *.wav
 *.mp4
