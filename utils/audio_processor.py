@@ -121,7 +121,7 @@ def download_youtube_audio(url: str) -> str:
     ydl_opts = {
         # Format 18 has video + audio.
         # If bestaudio becomes available later, it can be used as fallback.
-        "format": "18/bestaudio/best",
+        "format": "bestaudio/best",
         "outtmpl": output_path,
         # Firefox cookies
         "cookiesfrombrowser": ("firefox",),

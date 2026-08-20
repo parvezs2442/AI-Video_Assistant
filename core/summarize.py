@@ -43,12 +43,10 @@ def summarize(transcript: str) -> str:
             ("human","{text}"),
         ]
     )
-
     combined_chain =(
-        RunnablePassthrough() | RunnableLambda(lambda x:{"text":x}) | combined_prompt | llm | StrOutputParser
+        RunnablePassthrough() | RunnableLambda(lambda x:{"text":x}) | combined_prompt | llm | StrOutputParser()
     )
     return combined_chain.invoke(combined)
-
 
 def generate_title(transcript: str) -> str:
     llm = get_llm()
