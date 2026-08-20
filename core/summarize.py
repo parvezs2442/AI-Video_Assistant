@@ -28,8 +28,45 @@ def summarize(transcript: str) -> str:
             ("human", "{text}"),
         ]
     )
-
     map_chain = map_prompt | llm | StrOutputParser()
     chunks = split_transcript(transcript)
     chunk_summaries = [map_chain.invoke({"text": chunk}) for chunk in chunks]
+    combined = "\n\n".join(chunk_summaries)
+
+    combined_prompt= ChatPromptTemplate.from_messages(
+        [
+            (
+                "system",
+                "You are an expert meeting summarizer. Combine these partial summaries"
+                "into one final professional meeting summary in the bullet points."
+            ),
+            ("human","{text}"),
+        ]
+    )
+
+    combined_chain =(
+        RunnablePassthrough() | RunnableLambda(lambda x:{"text":x}) | combined_prompt | llm | StrOutputParser
+    )
+    return combined_chain.invoke(combined)
+
+
+def generate_title(transcript: str) -> str:
+    llm = get_llm()
+
+    chain_title =(
+        RunnablePassthrough() | RunnableLambda(lambda x:{"text":x}) |
+        ChatPromptTemplate.from_messages([
+            (
+                "system",
+                "Based on the meeting transcript, generate a short proffesssional meeting title"
+                "(max 8 words). Only retrurn the title nothing else",
+            ),
+            (
+                "human","{text}"
+            ),
+        ])
+        |llm
+        |StrOutputParser()
+    ) 
+    return chain_title.invoke(transcript[:200])
 
