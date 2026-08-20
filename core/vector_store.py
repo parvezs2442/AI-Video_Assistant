@@ -1,6 +1,6 @@
 
 from langchain_chroma import Chroma
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
 
@@ -20,7 +20,7 @@ def build_vector_store(transcript:str)->Chroma:
 
     spiltter = RecursiveCharacterTextSplitter(
         chunk_size = 500,
-        chunks_overlap = 50
+        chunk_overlap = 50
     )
     chunks = spiltter.split_text(transcript)
 

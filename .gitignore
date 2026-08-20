@@ -30,3 +30,6 @@ downloads/
 *.wav
 *.mp4
 *.webm
+
+# Local Vector Database
+vector_db/
