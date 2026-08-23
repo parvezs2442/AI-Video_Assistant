@@ -65,5 +65,5 @@ def generate_title(transcript: str) -> str:
         |llm
         |StrOutputParser()
     ) 
-    return chain_title.invoke(transcript[:200])
+    return chain_title.invoke(transcript[:2000])
 
